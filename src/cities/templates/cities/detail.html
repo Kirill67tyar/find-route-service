@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% if object %}
+Город {{object}}
+{% else %}
+Город не найден
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+<h3>Город</h3>
+<div class="row">
+    <div class="col-md">
+        {% if object %}
+        <p>{{object}}</p>
+        {% else %}
+        <p>Город не найден</p>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <a href="{% url 'cities:home' %}">
+            <button type=button class="btn btn-light">
+                На главную
+            </button>
+        </a>
+    </div>
+</div>
+{% endblock %}
