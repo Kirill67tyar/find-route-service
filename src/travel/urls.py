@@ -21,4 +21,4 @@ urlpatterns = [
     path('cities/', include('cities.urls', namespace='cities')),
 ]
 
-# 06.28
+# 07.35

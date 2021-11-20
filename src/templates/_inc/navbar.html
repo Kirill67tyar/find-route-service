@@ -1,5 +1,6 @@
 {% url 'cities:home' as cities_home_url %}
-<nav class="navbar navbar-expand-lg container navbar-dark" style="background-color: #de3009;">
+{% url 'cities:create' as cities_create_url %}
+<nav class="navbar navbar-expand-lg container navbar-dark" style="background-color: #FFA500;">
     <!--   класс container ограничивает размер -->
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'cities:home' %}">FindRoute</a>
@@ -12,6 +13,10 @@
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == cities_home_url %}active{% endif %}"
                        aria-current="page" href="{% url 'cities:home' %}">Города</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == cities_create_url %}active{% endif %}"
+                       aria-current="page" href="{% url 'cities:create' %}">Добавить город</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
