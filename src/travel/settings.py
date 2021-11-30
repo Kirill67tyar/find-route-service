@@ -123,7 +123,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+
+
+# -------------------------------------------------------- STATIC settings
+
 STATIC_URL = '/static/'
+
+# здесь мы указываем откуда будем доставать статику и подключать к шаблону,
+# с помощью тега {% static 'css/style.css' %}
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# здесь мы указываем куда django будет собирать всю статику проекта при команде collectstatic
+# на самом деле это основная папка, от куда берется статика проекта
+# и должна называться они staticfiles
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+# -------------------------------------------------------- STATIC settings
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
