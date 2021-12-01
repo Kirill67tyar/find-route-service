@@ -19,6 +19,7 @@ from django.urls import path, include
 urlpatterns = [
     path('adminka_/', admin.site.urls),
     path('cities/', include('cities.urls', namespace='cities')),
+    path('trains/', include('trains.urls', namespace='trains')),
 ]
 
-# 08.39
+# 09.48

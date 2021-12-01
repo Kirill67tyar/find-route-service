@@ -1,9 +1,14 @@
 {% url 'cities:home' as cities_home_url %}
 {% url 'cities:create' as cities_create_url %}
+{% url 'trains:home' as trains_home_url %}
 <nav class="navbar navbar-expand-lg container navbar-dark" style="background-color: #FFA500;">
     <!--   класс container ограничивает размер -->
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'cities:home' %}">FindRoute</a>
+        <a class="navbar-brand" href="{% url 'cities:home' %}">
+<!--            <i class="fa fa-road fa-lg" aria-hidden="true"></i>-->
+            <i class="fa fa-subway fa-lg" aria-hidden="true"></i>&nbsp;
+            <strong>FindRoute</strong>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -19,7 +24,8 @@
                        aria-current="page" href="{% url 'cities:create' %}">Добавить город</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link {% if request.path == trains_home_url %}active{% endif %}"
+                       aria-current="page"  href="{% url 'trains:home' %}">Поезда</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>

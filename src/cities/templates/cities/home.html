@@ -11,10 +11,7 @@
             <tr>
                 <td>
                     <a href="{% url 'cities:detail' pk=object.pk %}">
-                        <button type=button class="btn btn-outline-success">
-                            {{ object.name }}
-                        </button>
-
+                        <p class="fs-5 fw-normal">{{ object.name }}</p>
                     </a>
                 </td>
                 <td>
