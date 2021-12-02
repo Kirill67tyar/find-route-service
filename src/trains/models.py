@@ -1,6 +1,8 @@
+from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
-from django.db.models import (Model, CharField, ForeignKey,
-                              PositiveSmallIntegerField, DateTimeField, CASCADE, )
+from django.db.models import (
+    Model, CharField, ForeignKey, PositiveSmallIntegerField, DateTimeField, CASCADE,
+)
 
 from cities.models import City
 
@@ -40,3 +42,8 @@ class Train(Model):
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
+
+    # def get_absolute_url(self):
+    #     return reverse_lazy(
+    #         'trains:detail', kwargs={'pk': self.pk, }
+    #     )
