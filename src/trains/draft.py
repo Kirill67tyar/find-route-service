@@ -20,3 +20,38 @@ on_delete=SET_NULL - задаёт NULL для всех дочерних запи
 
 
 """
+
+
+graph1 = {
+    'A': {'B', 'S'},
+    'B': {'A'},
+    'C': {'D', 'E', 'F', 'S'},
+    'D': {'C'},
+    'E': {'C', 'H'},
+    'F': {'C', 'G'},
+    'G': {'F', 'S'},
+    'H': {'E', 'G'},
+    'S': {'A', 'C', 'G'}
+}
+
+
+def dfs_paths(graph, start, goal):
+    stack = [(start, [start, ])]
+    while stack:
+        (vertex, path) = stack.pop()
+        if vertex in graph.keys():
+            for next_ in graph[vertex] - set(path):
+                if next_ == goal:
+                    yield path + [next_]
+                else:
+                    stack.append((next_, path + [next_, ]))
+
+
+f = dfs_paths(graph1, 'A', 'F')
+print(f.__next__())                             # ['A', 'S', 'C', 'F']
+print(dfs_paths(graph1, 'A', 'F').__next__())   # ['A', 'S', 'C', 'F']
+print(list(dfs_paths(graph1, 'A', 'F')))        # [['A', 'S', 'C', 'F'], ['A', 'S', 'C', 'E', 'H', 'G', 'F'], ['A', 'S', 'G', 'F']]
+print(f)                                        # <generator object dfs_path at 0x7f92a5d6bf90>
+
+print(range(1,4), type(range(1,4)))             # range(1, 4) <class 'range'>
+print(list(range(1,4)))                         # [1, 2, 3]
