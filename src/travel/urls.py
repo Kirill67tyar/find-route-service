@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from routes.views import home_view, find_routes_view
+from routes.views import home_view, find_routes_view, add_routes_view
 
 urlpatterns = [
     path('adminka_/', admin.site.urls),  # http://127.0.0.1:8000/adminka_/
@@ -23,9 +23,10 @@ urlpatterns = [
     path('trains/', include('trains.urls', namespace='trains')),
     path('', home_view, name='home'),
     path('find-routes/', find_routes_view, name='find-routes'),
+    path('add-routes/', add_routes_view, name='add-routes'),
 ]
 
-# 10.61
+# 10.67
 # (пересмотреть 55 урок, очень полезный)
 
 

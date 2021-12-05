@@ -19,7 +19,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -31,7 +30,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -77,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'travel.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -87,7 +84,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -107,11 +103,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'#'ru-ru'
+LANGUAGE_CODE = 'en-us'  # 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -121,10 +116,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 
 
 # -------------------------------------------------------- STATIC settings
@@ -144,8 +137,92 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 # -------------------------------------------------------- STATIC settings
 
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# -------------------------------------------------------- LOGGING settings
+# https://docs.djangoproject.com/en/3.2/topics/logging/
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {  # formatters - отвечает за то, каким образом будет выводиться сообщение
+        'verbose': {
+            'format':
+                '{levelname} {asctime} {module} {message}',
+            #   {levelname} - уровень данного сообщения
+            #   {asctime} - время
+            #   {module} - модуль из которого происходил запрос
+            #   {message} - сам запрос, который необходимо фиксировать
+            'style':
+                '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        # 'special': {
+        #     '()': 'project.logging.SpecialFilter',
+        #     'foo': 'bar',
+        # },
+        'require_debug_true': {  # require_debug_true - мы будем фиксировать логирование, когда DEBUG = True
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {  # хэндлеры говорят о том, каким образом мы можем обрабатывать полученное сообщение
+        # куда их выводить, в консоль, в файл, на почту?
+        'console': {  # вывести в консоль
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {  # вывести в файл
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR.joinpath('log/application.log'),
+            'formatter': 'verbose',
+        },
+        # 'mail_admins': {  # послать по почте
+        #     'level': 'ERROR',
+        #     'class': 'django.utils.log.AdminEmailHandler',
+        #     'filters': ['special']
+        # }
+    },
+    'loggers': {  # что мы фактически фиксируем, и куда
+        'django.db.backends': { # 'django.db.backends' - настройки фиксации логирования запросов в бд
+            'handlers': ['file'],  # в записываем в файл
+            'level': 'DEBUG',
+        },
+        'django.request': {  # 'django.request' - настройки фиксации логирования HTTP запросов
+            'handlers': ['file'],  # в записываем в файл
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        # 'django': {
+        #     'handlers': ['console'],
+        #     'propagate': True,
+        # },
+        # 'myproject.custom': {
+        #     'handlers': ['console', 'mail_admins'],
+        #     'level': 'INFO',
+        #     'filters': ['special']
+        # }
+    }
+}
+
+# ! Важный момент:
+# Здеесь мы будем фиксировать логирования, когда DEBUG = True
+    # 'require_debug_true': {
+    #             '()': 'django.utils.log.RequireDebugTrue',}
+
+# А здесь сообщаем куда будем записывать логи (файл log):
+    # 'filename': BASE_DIR.joinpath('log/application.log'),
+
+# Если DEBUG = False и мы уже на боевом сервере, перешли в продакшн,
+# файл log (кужа мы бцдем записывать логи) всё равно должен быть
+
+# -------------------------------------------------------- LOGGING settings

@@ -1,11 +1,12 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.forms import (
-    Form, ModelForm, TextInput, Select, SelectMultiple,
-    DateTimeInput, NumberInput, ModelChoiceField, ModelMultipleChoiceField,
+    Form, ModelForm, TextInput, HiddenInput, Select, SelectMultiple,
+    DateTimeInput, NumberInput, ModelChoiceField, ModelMultipleChoiceField, CharField,
 )
 
 from cities.models import City
+from routes.models import Route
 
 cities = City.objects.all()
 
@@ -32,3 +33,30 @@ class RouteForm(Form):
             attrs={'class': 'form-control', 'placeholder': 'время в пути', }
         ),
     )
+
+
+class RouteModelForm(ModelForm):
+    name = CharField(
+        label='Название маршрута', widget=TextInput(
+            attrs={'class': ' form-control',
+                   'placeholder': 'введите название маршрута', }
+        )
+    )
+    trains = ModelMultipleChoiceField(
+        queryset=cities, label=_('Через какие города'), required=False,
+        widget=SelectMultiple(
+            attrs={'class': 'form-control d-none', }
+        )
+    )
+
+    class Meta:
+        model = Route
+        fields = '__all__'
+        widgets = {
+            'from_city': HiddenInput(),
+            'to_city': HiddenInput(),
+            # 'trains': SelectMultiple(
+            #     attrs={'class': 'form-control d-none', }
+            # ),
+            'travel_times': HiddenInput(),
+        }

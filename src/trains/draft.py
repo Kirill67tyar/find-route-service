@@ -22,6 +22,9 @@ on_delete=SET_NULL - задаёт NULL для всех дочерних запи
 """
 
 
+
+
+# ------------------------------------ Отличный алгоритм для DFS (графы) ----------------------------------
 graph1 = {
     'A': {'B', 'S'},
     'B': {'A'},
@@ -55,3 +58,14 @@ print(f)                                        # <generator object dfs_path at 
 
 print(range(1,4), type(range(1,4)))             # range(1, 4) <class 'range'>
 print(list(range(1,4)))                         # [1, 2, 3]
+
+# ---------------------------------------------------------------------------------------------------
+
+from django.db.models.query import QuerySet as QS
+from django.db.models.manager import Manager
+
+
+
+
+
+
