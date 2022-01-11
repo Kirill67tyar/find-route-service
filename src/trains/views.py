@@ -10,8 +10,7 @@ from cities.utils import get_object_or_null, get_view_at_console1 as cons
 
 __all__ = (
     'home_view', 'TrainListView',
-    'TrainDetailView',
-    'TrainCreatelView',
+    'TrainDetailView', 'TrainCreateView',
     'TrainUpdateView', 'TrainDeleteView',
 )
 
@@ -46,11 +45,12 @@ class TrainDetailView(DetailView):
         return super().get(request, *args, **kwargs)
 
 
-class TrainCreatelView(SuccessMessageMixin, CreateView):
+class TrainCreateView(SuccessMessageMixin, CreateView):
     # model = Train
     form_class = TrainModelForm
     template_name = 'trains/create.html'
     success_message = 'Поезд успешно создан'
+
     # success_url = reverse_lazy('trains:home')
 
     def get_success_url(self):
@@ -82,4 +82,3 @@ class TrainDeleteView(DeleteView):
     def get(self, request, *args, **kwargs):
         messages.success(request, 'Поезд успешно удалён')
         return self.post(request, *args, **kwargs)
-

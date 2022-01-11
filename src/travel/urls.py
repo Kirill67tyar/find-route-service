@@ -26,7 +26,7 @@ urlpatterns = [
     path('add-routes/', add_routes_view, name='add-routes'),
 ]
 
-# 10.67
+# 10.68
 # (пересмотреть 55 урок, очень полезный)
 
 
