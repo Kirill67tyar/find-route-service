@@ -22,7 +22,6 @@ def home_view(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'objects_list': cities,
         'page_obj': page_obj,
     }
 
@@ -41,7 +40,7 @@ class CityListView(ListView):
     template_name = 'cities/home.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=None, **kwargs)
+        context = super().get_context_data(**kwargs)
         context['my_form'] = CityModelForm()
         return context
 
