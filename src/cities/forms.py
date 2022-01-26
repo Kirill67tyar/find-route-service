@@ -1,4 +1,6 @@
-from django.forms import Form, ModelForm, CharField, TextInput
+from django.forms import (
+    Form, ModelForm, CharField, TextInput,
+)
 
 from cities.models import City
 

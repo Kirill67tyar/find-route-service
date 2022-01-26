@@ -26,8 +26,12 @@ urlpatterns = [
     path('add-routes/', add_routes_view, name='add-routes'),
 ]
 
-# 10.68 (repeat 23)
+# 10.68 (repeat 36)
 # (пересмотреть 55 урок, очень полезный)
+# (24 урок для настройки шаблонных тегов)
+# (33 урок для того как настроить runserver прямо из pycharm)
+#
+# )
 
 
 """

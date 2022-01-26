@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from django.contrib.messages.views import SuccessMessageMixin, messages
-from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView, )
+from django.views.generic import (
+    ListView, DetailView, CreateView,
+    UpdateView, DeleteView,
+)
 
 from cities.models import City
 from cities.forms import CityModelForm, CityForm
@@ -45,7 +48,6 @@ class CityListView(ListView):
         return context
 
 
-
 class CityDetailView(DetailView):
     queryset = City.objects.all()
     template_name = 'cities/detail.html'
@@ -78,4 +80,8 @@ class CityDeleteView(DeleteView):
 
     def get(self, request, *args, **kwargs):
         messages.success(request, 'Город успешно удалён')
+        # generic DeleteView будет удалять только, если
+        # к нему обратиться post запросом
+        # можно это сделать через форму, а можно здесь через обработчик
+        # запомни этот приём
         return self.post(request, *args, **kwargs)
