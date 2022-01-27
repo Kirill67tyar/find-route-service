@@ -3,7 +3,7 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
 
-        <!--        кнопка на последнюю-->
+        <!--        кнопка на первую-->
         <li class="page-item {% if page_obj.number == 1 %}disabled{% endif %}">
             <a class="page-link"
                href="?page=1">На первую</a>
@@ -23,11 +23,18 @@
         {% for page in page_obj.paginator.page_range %}
 
         {% if page_obj.number == page %}
-        <li class="page-item active"><a class="page-link" href="#">{{page}}</a></li>
+        <li class="page-item active">
+            <a class="page-link" href="#">
+                {{page}}
+            </a>
+        </li>
 
         {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
-        <li class="page-item"><a class="page-link"
-                                 href="?page={{page}}">{{page}}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{page}}">
+                {{page}}
+            </a>
+        </li>
 
         {% endif %}
         {% endfor %}
@@ -44,8 +51,9 @@
         <!--        кнопка на последнюю-->
         &nbsp;&nbsp;&nbsp;
         <li class="page-item {% if page_obj.number == total_number_of_pages %}disabled{% endif %}">
-            <a class="page-link"
-               href="?page={{ total_number_of_pages }}">На последнюю</a>
+            <a class="page-link" href="?page={{ total_number_of_pages }}">
+                На последнюю
+            </a>
         </li>
 
     </ul>

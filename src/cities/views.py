@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from django.contrib.messages.views import SuccessMessageMixin, messages
@@ -23,9 +23,11 @@ def home_view(request):
     paginator = Paginator(object_list=cities, per_page=5)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
+    form = CityModelForm()
 
     context = {
         'page_obj': page_obj,
+        'form': form,
     }
 
     # # in console
@@ -44,7 +46,7 @@ class CityListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_form'] = CityModelForm()
+        context['form'] = CityModelForm()
         return context
 
 
@@ -65,6 +67,7 @@ class CityCreatelView(SuccessMessageMixin, CreateView):
     # success_url = reverse_lazy('cities:home')
 
 
+
 class CityUpdateView(SuccessMessageMixin, UpdateView):
     model = City
     form_class = CityModelForm
@@ -80,8 +83,9 @@ class CityDeleteView(DeleteView):
 
     def get(self, request, *args, **kwargs):
         messages.success(request, 'Город успешно удалён')
+        cons(messages)
         # generic DeleteView будет удалять только, если
         # к нему обратиться post запросом
-        # можно это сделать через форму, а можно здесь через обработчик
+        # можно это сделать через форму, а можно здесь, через обработчик
         # запомни этот приём
         return self.post(request, *args, **kwargs)
