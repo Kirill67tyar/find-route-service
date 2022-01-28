@@ -23,7 +23,7 @@ def home_view(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'objects_list': trains,
+        'object_list': trains,
         'page_obj': page_obj,
     }
 

@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
+from django.db import models
 from django.db.models import (
     Model, CharField, ForeignKey, PositiveSmallIntegerField, DateTimeField, CASCADE,
 )
@@ -23,9 +24,15 @@ class Train(Model):
     class Meta:
         verbose_name = 'Поезд'
         verbose_name_plural = 'Поезда'
-        unique_together = ('travel_time', 'from_city', 'to_city',)
+        unique_together = (
+            'travel_time', 'from_city', 'to_city',
+        )
         ordering = ('travel_time',)
 
+    # Вообще этот метод clean() есть и в обычных формах.
+    # И в формах он занимается также вопросом валидации (причем там он автоматически вызывается
+    # после проверки is_valid(), тк там можно использовать cleaned_data())
+    # Но здесь мы будем его вызывать в модельном методе save()
     def clean(self):
         if self.from_city == self.to_city:
             raise ValidationError('Город отправления/прибытия должен быть изменен')
@@ -43,7 +50,8 @@ class Train(Model):
         self.clean()
         super().save(*args, **kwargs)
 
-    # def get_absolute_url(self):
-    #     return reverse_lazy(
-    #         'trains:detail', kwargs={'pk': self.pk, }
-    #     )
+    def get_absolute_url(self):
+        return reverse_lazy(
+            'trains:detail', kwargs={'pk': self.pk, }
+        )
+
