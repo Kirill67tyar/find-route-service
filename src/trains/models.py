@@ -9,12 +9,22 @@ from cities.models import City
 
 
 class Train(Model):
-    name = CharField(max_length=50, unique=True, verbose_name='Название поезда')
+    name = CharField(
+        max_length=50, unique=True, verbose_name='Название поезда'
+    )
     travel_time = PositiveSmallIntegerField(verbose_name='Время в пути')
-    from_city = ForeignKey(to='cities.City', on_delete=CASCADE,
-                           related_name='trains_start', verbose_name='Из какого города')
-    to_city = ForeignKey(to='cities.City', on_delete=CASCADE,
-                         related_name='trains_arrive', verbose_name='В какой город')
+    from_city = ForeignKey(
+        to='cities.City',
+        on_delete=CASCADE,
+        related_name='trains_start',
+        verbose_name='Из какого города'
+    )
+    to_city = ForeignKey(
+        to='cities.City',
+        on_delete=CASCADE,
+        related_name='trains_arrive',
+        verbose_name='В какой город'
+    )
     departure_time = DateTimeField(verbose_name='Время отправления')
     arrival_time = DateTimeField(verbose_name='Время прибытия')
 
@@ -54,4 +64,3 @@ class Train(Model):
         return reverse_lazy(
             'trains:detail', kwargs={'pk': self.pk, }
         )
-

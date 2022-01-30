@@ -1,7 +1,8 @@
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 from django.db.models import (
-    Model, CharField, ForeignKey, ManyToManyField, PositiveSmallIntegerField, DateTimeField, CASCADE,
+    Model, CharField, ForeignKey, ManyToManyField,
+    PositiveSmallIntegerField, DateTimeField, CASCADE,
 )
 
 from cities.models import City
@@ -23,7 +24,9 @@ class Route(Model):
         related_name='routes_arrive', verbose_name='В какой город'
     )
     trains = ManyToManyField(
-        to='trains.Train', related_name='routes', verbose_name='Список поездов'
+        to='trains.Train',
+        related_name='routes',
+        verbose_name='Список поездов'
     )
 
     def __str__(self):

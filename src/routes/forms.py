@@ -13,23 +13,30 @@ cities = City.objects.all()
 
 class RouteForm(Form):
     from_city = ModelChoiceField(
-        queryset=cities, label=_('Из города'), widget=Select(
+        queryset=cities,
+        label=_('Из города'),
+        widget=Select(
             attrs={'class': ' form-control js-example-basic-single', }
         )
     )
     to_city = ModelChoiceField(
-        queryset=cities, label=_('В город'), widget=Select(
+        queryset=cities,
+        label=_('В город'),
+        widget=Select(
             attrs={'class': 'form-control js-example-basic-single', }
         )
     )
     cities = ModelMultipleChoiceField(
-        queryset=cities, label=_('Через какие города'), required=False,
+        queryset=cities,
+        label=_('Через какие города'),
+        required=False,
         widget=SelectMultiple(
             attrs={'class': 'form-control js-example-basic-multiple', }
         )
     )
     traveling_time = forms.IntegerField(
-        label=_('Ожидаемое время поездки'), widget=NumberInput(
+        label=_('Ожидаемое время поездки'),
+        widget=NumberInput(
             attrs={'class': 'form-control', 'placeholder': 'время в пути', }
         ),
     )
@@ -37,15 +44,20 @@ class RouteForm(Form):
 
 class RouteModelForm(ModelForm):
     name = CharField(
-        label='Название маршрута', widget=TextInput(
-            attrs={'class': ' form-control',
-                   'placeholder': 'введите название маршрута', }
+        label='Название маршрута',
+        widget=TextInput(attrs={
+            'class': ' form-control',
+            'placeholder': 'введите название маршрута',
+        }
         )
     )
     trains = ModelMultipleChoiceField(
-        queryset=cities, label=_('Через какие города'), required=False,
-        widget=SelectMultiple(
-            attrs={'class': 'form-control d-none', }
+        queryset=cities,
+        label=_('Через какие города'),
+        required=False,
+        widget=SelectMultiple(attrs={
+            'class': 'form-control d-none',
+        }
         )
     )
 

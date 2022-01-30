@@ -3,7 +3,8 @@ from datetime import datetime
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.forms import (
-    Form, ModelForm, TextInput, Select, DateTimeInput, NumberInput, ModelChoiceField,
+    Form, ModelForm, TextInput, Select,
+    DateTimeInput, NumberInput, ModelChoiceField,
 )
 
 from trains.models import Train
@@ -24,14 +25,22 @@ class TrainModelForm(ModelForm):
     #     )
     # )
     departure_time = forms.DateTimeField(
-        initial=datetime.now(), label='Время прибытия',
-        widget=DateTimeInput(attrs={'class': 'form-control', }
-                             )
+        initial=datetime.now(),
+        label='Время прибытия',
+        widget=DateTimeInput(
+            attrs={
+                'class': 'form-control',
+            }
+        )
     )
     arrival_time = forms.DateTimeField(
-        initial=datetime.now(), label='Время отбытия',
-        widget=DateTimeInput(attrs={'class': 'form-control', }
-                             )
+        initial=datetime.now(),
+        label='Время отбытия',
+        widget=DateTimeInput(
+            attrs={
+                'class': 'form-control',
+            }
+        )
     )
 
     class Meta:
@@ -39,16 +48,26 @@ class TrainModelForm(ModelForm):
         fields = '__all__'
         widgets = {
             'name': TextInput(
-                attrs={'class': 'form-control', 'placeholder': 'введите номер поезда', }
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'введите номер поезда',
+                }
             ),
             'travel_time': NumberInput(
-                attrs={'class': 'form-control', 'placeholder': 'время в пути', }
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'время в пути',
+                }
             ),
             'from_city': Select(
-                attrs={'class': 'form-control js-example-basic-single', }
+                attrs={
+                    'class': 'form-control js-example-basic-single',
+                }
             ),
             'to_city': Select(
-                attrs={'class': 'form-control js-example-basic-single', }
+                attrs={
+                    'class': 'form-control js-example-basic-single',
+                }
             ),
         }
         labels = {
