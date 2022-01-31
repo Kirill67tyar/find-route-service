@@ -7,6 +7,7 @@ from django.forms import (
 
 from cities.models import City
 from routes.models import Route
+from trains.models import Train
 
 cities = City.objects.all()
 
@@ -52,7 +53,7 @@ class RouteModelForm(ModelForm):
         )
     )
     trains = ModelMultipleChoiceField(
-        queryset=cities,
+        queryset=Train.objects.all(),
         label=_('Через какие города'),
         required=False,
         widget=SelectMultiple(attrs={
