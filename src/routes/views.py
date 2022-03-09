@@ -28,7 +28,7 @@ def find_routes_view(request):
     else:
         # form = RouteForm()
         # return render(request, 'routes/home.html', {'form': form, })
-        messages.error(request, 'Ошибка ввода')
+        # messages.error(request, 'Ошибка ввода')
         return redirect(reverse('home'))
 
 

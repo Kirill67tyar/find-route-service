@@ -47,9 +47,9 @@ class Route(Model):
         # # при update метод save вроде как не используется
         # qs = self.__class__.objects.filter(from_city=self.from_city,
         #                           to_city=self.to_city,
-        #                           travel_time=self.travel_time).exclude(pk=self.pk)
+        #                           travel_times=self.travel_times).exclude(pk=self.pk)
         # if qs.exists():
-        #     raise ValidationError('Ошибка. Такой поезд уже есть')
+        #     raise ValidationError('Ошибка. Такой маршрут уже есть')
 
     def save(self, *args, **kwargs):
         self.clean()
