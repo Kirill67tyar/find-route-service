@@ -55,12 +55,24 @@ def get_routes(request, form) -> dict:
 
 
     # не мой вариант для all()
-    # qs = Train.objects.all()/
+    # qs = Train.objects.all()
     qs = Train.objects.select_related('from_city', 'to_city').all()
     graph = get_graph2(qs=qs)
 
 
     # all_ways -- [[],[],]
+    # к примеру если from_city.pk = 7, а to_city.pk = 10,
+    # то результат как добраться от 7 до 10 будет такой:
+    # [
+    #   [7, 14, 18, 3, 10],
+    #   [7, 14, 18, 3, 5, 10],
+    #   [7, 3, 10],
+    #   [7, 3, 5, 10],
+    #   [7, 2, 14, 18, 3, 10],
+    #   [7, 2, 14, 18, 3, 5, 10]
+    # ]
+    # тут видно, что напрямую поезд от города 7 до города 10 не ездит,
+    # а проезжает через город 3
     all_ways = list(dfs_paths(
         graph=graph, start=from_city.pk, goal=to_city.pk
     ))
