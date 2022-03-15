@@ -38,11 +38,12 @@ def add_routes_view(request):
         print('%' * 20, data, sep='\n', end='\n' * 5)
         context = {}
         if data:
-            # проблема этого обработчика (add_routes_view) в том,
-            # что он два раза посылает post запрос,
-            # сначала от формы со страницы home.html, а потом от формы со страницы create.html
+            # # проблема этого обработчика (add_routes_view) в том,
+            # # что он два раза посылает post запрос,
+            # # сначала от формы со страницы home.html, а потом от формы со страницы create.html
             # print('*'*20,data,sep='\n',end='\n'*5)
             # print(data.get('total_time', 'what?'),end='\n'*5)
+
             from_city = int(data['from_city'])
             to_city = int(data['to_city'])
             total_time = int(data['total_time'])

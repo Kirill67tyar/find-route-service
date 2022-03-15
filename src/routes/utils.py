@@ -1,6 +1,7 @@
 from trains.models import Train
 
 
+# эта функция больше не нужна
 def sort_routes_by_time(routes) -> list:
     sorted_routes = []
     sorted_times = list(set([r['total_time'] for r in routes]))
@@ -53,12 +54,10 @@ def get_routes(request, form) -> dict:
     # мой вариант
     # graph = get_graph(qs=qs)
 
-
     # не мой вариант для all()
     # qs = Train.objects.all()
     qs = Train.objects.select_related('from_city', 'to_city').all()
     graph = get_graph2(qs=qs)
-
 
     # all_ways -- [[],[],]
     # к примеру если from_city.pk = 7, а to_city.pk = 10,
@@ -86,7 +85,7 @@ def get_routes(request, form) -> dict:
 
         # и есть ли эти города в хоть одном из маршрутов
         for route in all_ways:
-            if all(city in route for city in _cities):
+            if all([city in route for city in _cities]):
                 right_ways.append(route)
         if not right_ways:
             raise ValueError('Маршрут через эти города не возможен')
@@ -133,14 +132,24 @@ def get_routes(request, form) -> dict:
     if not routes_with_right_time:
         raise ValueError('Нет маршрутов с подходящим временем')
 
-    # сортировка маршрутов по времени
-    if len(routes_with_right_time) == 1:
-        # здесь нечего сортировать, т.к. маршрут всего один
-        sorted_routes = routes_with_right_time
-    else:
-        # здесь sorted_routes -- то же что и routes_with_right_time,
-        # но отсортированная по времени
-        sorted_routes = sort_routes_by_time(routes_with_right_time)
+    # сортировка маршрутов по времени (не важно, один он или много)
+    routes_with_right_time.sort(key=lambda x: x['total_time'])
+    sorted_routes = routes_with_right_time
+
+    # # ---   ---   ---   ---   ---
+    # # если бы я не отсортировал бы так :
+    # # routes_with_right_time.sort(key=lambda x: x['total_time'])
+    # # то пришлось бы делать последующую проверку,
+    # # и использовать грамоздкую функцию наверху файла
+    # if len(routes_with_right_time) == 1:
+    #     # здесь нечего сортировать, т.к. маршрут всего один
+    #     sorted_routes = routes_with_right_time
+    # else:
+    #     # здесь sorted_routes -- то же что и routes_with_right_time,
+    #     # но отсортированная по времени
+    #     sorted_routes = sort_routes_by_time(routes_with_right_time)
+    # # ---   ---   ---   ---   ---
+
 
     #  сейчас этот участок кода не нужен,
     # он добавляет экземпляры City в values для Train

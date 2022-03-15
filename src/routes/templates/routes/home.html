@@ -6,11 +6,13 @@
 
 {% block content %}
 {% if routes %}
+{% with cities.from_city.pk as from_city_pk %}
+{% with cities.to_city.pk as to_city_pk %}
 <h3>Маршрут{% if routes|length != 1 %}ы{% endif %} из города {{ cities.from_city.name }} в город {{ cities.to_city.name }}</h3>
 {% for route in routes %}
 <form action="{% url 'add-routes' %}" method="POST">{% csrf_token %}
-    <input type="hidden" name="from_city" value="{{ cities.from_city.pk }}">
-    <input type="hidden" name="to_city" value="{{ cities.to_city.pk }}">
+    <input type="hidden" name="from_city" value="{{ from_city_pk }}">
+    <input type="hidden" name="to_city" value="{{ to_city_pk }}">
     <input type="hidden" name="total_time" value="{{ route.total_time }}">
     <input type="hidden" name="trains" value="{% for train in route.trains %}{{ train.pk }},{% endfor %}">
     <br><br>
@@ -42,6 +44,8 @@
     <button class="btn btn-primary">Сохранить</button>
 </form>
 {% endfor %}
+{% endwith %}
+{% endwith %}
 {% else %}
 <h3>Поиск маршрута</h3>
 {% endif %}
