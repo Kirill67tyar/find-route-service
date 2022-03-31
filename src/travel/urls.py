@@ -15,23 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from routes.views import home_view, find_routes_view, add_routes_view
+from routes.views import *
 
 urlpatterns = [
     path('adminka_/', admin.site.urls),  # http://127.0.0.1:8000/adminka_/
     path('cities/', include('cities.urls', namespace='cities')),
     path('trains/', include('trains.urls', namespace='trains')),
+
+    # --- patterns for routes ---
     path('', home_view, name='home'),
-    path('find-routes/', find_routes_view, name='find-routes'),
-    path('add-routes/', add_routes_view, name='add-routes'),
+    path('find-route/', find_route_view, name='find-route'),
+    path('add-route/', add_route_view, name='add-route'),
+    path('save-route/', save_route_view, name='save-route'),
+    path('list/', RouteListView.as_view(), name='list'),
+    path('detail/<int:pk>/', RouteDetailView.as_view(), name='detail'),
 ]
 
-# 10.68 (repeat 65)
+# 11.72
 # (пересмотреть 53 урок, хорошо показан механизм деббагинга на pycharm)
 # (пересмотреть 55 урок, очень полезный)
 # (24 урок для настройки шаблонных тегов)
 # (33 урок для того как настроить runserver прямо из pycharm)
-
 
 
 """

@@ -52,9 +52,19 @@ class RouteModelForm(ModelForm):
         }
         )
     )
+
+    # from_city = ModelChoiceField(
+    #     queryset=cities,
+    #     widget=HiddenInput()
+    # )
+    #
+    # to_city = ModelChoiceField(
+    #     queryset=cities,
+    #     widget=HiddenInput()
+    # )
+
     trains = ModelMultipleChoiceField(
         queryset=Train.objects.all(),
-        label=_('Через какие города'),
         required=False,
         widget=SelectMultiple(attrs={
             'class': 'form-control d-none',

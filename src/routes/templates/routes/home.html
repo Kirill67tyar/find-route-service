@@ -15,7 +15,7 @@
     <u>{{ to_city.name }}</u>
 </h4>
 {% for route in routes %}
-<form action="{% url 'add-routes' %}" method="POST">{% csrf_token %}
+<form action="{% url 'add-route' %}" method="POST">{% csrf_token %}
     <input type="hidden" name="from_city" value="{{ from_city.pk }}">
     <input type="hidden" name="to_city" value="{{ to_city.pk }}">
     <input type="hidden" name="total_time" value="{{ route.total_time }}">
@@ -54,7 +54,7 @@
 {% else %}
 <h3>Поиск маршрута</h3>
 {% endif %}
-{% url 'find-routes' as action %}
+{% url 'find-route' as action %}
 {% include '_inc/form.html' with button='Найти' action=action %}
 {% endblock %}
 
