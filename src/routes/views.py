@@ -1,8 +1,11 @@
-from django.views.generic import ListView, DetailView
 from django.core.exceptions import ValidationError
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.messages.views import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import (
+    ListView, DetailView, DeleteView,
+)
 
 from routes.models import Route
 from trains.models import Train
@@ -14,6 +17,7 @@ __all__ = (
     'home_view', 'find_route_view',
     'add_route_view', 'save_route_view',
     'RouteListView', 'RouteDetailView',
+    'RouteDeleteView',
 )
 
 
@@ -34,33 +38,20 @@ def find_route_view(request):
             return render(request, 'routes/home.html', context)
         return render(request, 'routes/home.html', {'form': form, })
     else:
-        # form = RouteForm()
-        # return render(request, 'routes/home.html', {'form': form, })
-        # messages.error(request, 'Ошибка ввода')
         return redirect(reverse('home'))
 
 
 def add_route_view(request):
     if request.method == 'POST':
         data = request.POST
-        # print('%' * 20, data, sep='\n', end='\n' * 5)
         context = {}
         if data:
-            # # проблема этого обработчика (add_routes_view) в том,
-            # # что он два раза посылает post запрос,
-            # # сначала от формы со страницы home.html, а потом от формы со страницы create.html
-            # print('*'*20,data,sep='\n',end='\n'*5)
-            # print(data.get('total_time', 'what?'),end='\n'*5)
-
             from_city_id = int(data['from_city'])
             to_city_id = int(data['to_city'])
             total_time = int(data['total_time'])
             trains = data['trains'].split(',')
-            # print('@' * 20, trains, sep='\n', end='\n' * 5)
             trains_ids = [int(t) for t in trains if t.isdigit()]
-            # print('+' * 20, trains_ids, sep='\n', end='\n' * 5)
             qs = Train.objects.filter(pk__in=trains_ids).select_related('from_city', 'to_city')
-            # print('^' * 20, qs, sep='\n', end='\n' * 5)
             cities = City.objects.filter(
                 pk__in=[from_city_id, to_city_id, ]).in_bulk()
             form = RouteModelForm(
@@ -72,7 +63,6 @@ def add_route_view(request):
                 }
             )
             context['form'] = form
-            # context['action'] = reverse_lazy('save_route')
         return render(request, 'routes/create.html', context=context)
     else:
         messages.error(request, 'Не будь таким хитрожопым')
@@ -99,6 +89,16 @@ class RouteListView(ListView):
     template_name = 'routes/list.html'
     paginate_by = 5
 
+
 class RouteDetailView(DetailView):
     queryset = Route.objects.all()
     template_name = 'routes/detail.html'
+
+
+class RouteDeleteView(LoginRequiredMixin, DeleteView):
+    model = Route
+    success_url = reverse_lazy('home')
+
+    def get(self, request, *args, **kwargs):
+        messages.success(request=request, message='Маршрут удалён')
+        return self.post(request, *args, **kwargs)

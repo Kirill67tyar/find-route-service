@@ -29,9 +29,10 @@ urlpatterns = [
     path('save-route/', save_route_view, name='save-route'),
     path('list/', RouteListView.as_view(), name='list'),
     path('detail/<int:pk>/', RouteDetailView.as_view(), name='detail'),
+    path('delete/<int:pk>/', RouteDeleteView.as_view(), name='delete'),
 ]
 
-# 11.72
+# 11.74
 # (пересмотреть 53 урок, хорошо показан механизм деббагинга на pycharm)
 # (пересмотреть 55 урок, очень полезный)
 # (24 урок для настройки шаблонных тегов)

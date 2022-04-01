@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Создание маршрута
+Сохранение маршрута
 {% endblock %}
 
 {% block content %}
-<h3>Создание маршрута</h3>
+<h3>Сохранение маршрута</h3>
 <div class="row">
     <div class="col-md-4">
         <form action="{% url 'save-route' %}" method="POST">{% csrf_token %}
