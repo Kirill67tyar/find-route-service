@@ -21,6 +21,7 @@ urlpatterns = [
     path('adminka_/', admin.site.urls),  # http://127.0.0.1:8000/adminka_/
     path('cities/', include('cities.urls', namespace='cities')),
     path('trains/', include('trains.urls', namespace='trains')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
 
     # --- patterns for routes ---
     path('', home_view, name='home'),
@@ -32,7 +33,7 @@ urlpatterns = [
     path('delete/<int:pk>/', RouteDeleteView.as_view(), name='delete'),
 ]
 
-# 11.74
+# 11.77
 # (пересмотреть 53 урок, хорошо показан механизм деббагинга на pycharm)
 # (пересмотреть 55 урок, очень полезный)
 # (24 урок для настройки шаблонных тегов)

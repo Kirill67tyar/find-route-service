@@ -12,6 +12,14 @@
         <th>Куда</th>
         <th>Общее время в пути</th>
         <th>Поезда</th>
+
+        {% if user.is_authenticated %}
+        <th>
+            {% url 'delete' pk=object.pk as delete %}
+            {% include '_inc/actions/delete.html' with action=delete %}
+        </th>
+        {% endif %}
+
     </tr>
     <tr>
         <td>
@@ -25,8 +33,6 @@
             <p>{{ train }} &nbsp; ({{ train.travel_time }})</p>
             {% endfor %}
         </td>
-
     </tr>
-
 </table>
 {% endblock %}

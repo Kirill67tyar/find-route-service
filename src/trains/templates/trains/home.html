@@ -12,8 +12,10 @@
         <th>Время отправки</th>
         <th>Время прибытия</th>
         <th>Время в пути</th>
+        {% if user.is_authenticated %}
         <th>&nbsp;</th>
         <th>&nbsp;</th>
+        {% endif %}
     </tr>
     {% for object in page_obj %}
     <tr>
@@ -28,20 +30,17 @@
         <td>{{ object.departure_time|date:"D d M Y" }}</td>
         <td>{{ object.arrival_time|date:"D d M Y" }}</td>
         <td>{{ object.travel_time }}</td>
+        {% if user.is_authenticated %}
         <td>
-            <a href="{% url 'trains:update' pk=object.pk %}">
-                <button type=button class="btn btn-primary">
-                    <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                </button>
-            </a>
+            {% url 'trains:update' pk=object.pk as update %}
+            {% include '_inc/actions/update.html' with action=update %}
+
         </td>
         <td>
-            <a href="{% url 'trains:delete' pk=object.pk %}">
-                <button type=button class="btn btn-danger">
-                    <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                </button>
-            </a>
+            {% url 'trains:delete' pk=object.pk as delete %}
+            {% include '_inc/actions/delete.html' with action=delete %}
         </td>
+        {% endif %}
     </tr>
     {% endfor %}
 

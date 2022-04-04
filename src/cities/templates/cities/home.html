@@ -14,21 +14,20 @@
                 <p class="fs-5 fw-normal">{{ object.name }}</p>
             </a>
         </td>
+        {% if user.is_authenticated %}
         <td>
-            <a href="{% url 'cities:update' pk=object.pk %}">
-                <button type=button class="btn btn-primary">
-                    <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-                </button>
-            </a>
-        </td>
-        <td>
-            <a href="{% url 'cities:delete' pk=object.pk %}">
-                <button type=button class="btn btn-danger">
-                    <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
-                </button>
+            {% url 'cities:update' pk=object.pk as update %}
+            {% include '_inc/actions/update.html' with action=update %}
 
-            </a>
         </td>
+        <td>
+            {% url 'cities:delete' pk=object.pk as delete %}
+            {% include '_inc/actions/delete.html' with action=delete %}
+        </td>
+        {% else %}
+        &nbsp;
+        &nbsp;
+        {% endif %}
     </tr>
     {% endfor %}
 </table>
