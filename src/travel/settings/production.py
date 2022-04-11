@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', ]
 
 # Application definition
 
@@ -194,7 +194,7 @@ LOGGING = {
         # }
     },
     'loggers': {  # что мы фактически фиксируем, и куда
-        'django.db.backends': { # 'django.db.backends' - настройки фиксации логирования запросов в бд
+        'django.db.backends': {  # 'django.db.backends' - настройки фиксации логирования запросов в бд
             'handlers': ['file'],  # в записываем в файл
             'level': 'DEBUG',
         },
@@ -217,11 +217,11 @@ LOGGING = {
 
 # ! Важный момент:
 # Здеесь мы будем фиксировать логирования, когда DEBUG = True
-    # 'require_debug_true': {
-    #             '()': 'django.utils.log.RequireDebugTrue',}
+# 'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',}
 
 # А здесь сообщаем куда будем записывать логи (файл log):
-    # 'filename': BASE_DIR.joinpath('log/application.log'),
+# 'filename': BASE_DIR.joinpath('log/application.log'),
 
 # Если DEBUG = False и мы уже на боевом сервере, перешли в продакшн,
 # файл log (кужа мы бцдем записывать логи) всё равно должен быть

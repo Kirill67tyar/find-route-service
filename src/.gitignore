@@ -12,6 +12,7 @@ db.sqlite3
 db.sqlite3-journal
 media
 admin
+local_settings.py
 
 .env
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -76,6 +77,7 @@ pytestdebug.log
 *.mo
 
 # Django stuff:
+
 
 # Flask stuff:
 instance/

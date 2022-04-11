@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth import get_user_model, authenticate
 from django.forms import (
     Form, ModelForm, CharField,
-    PasswordInput, TextInput, ValidationError
+    PasswordInput, TextInput, ValidationError,
 )
 
 from accounts.utils import get_object_or_null
@@ -14,8 +14,8 @@ class LoginForm(Form):
     username = CharField(label='Логин',
                          required=True,
                          widget=TextInput(attrs={
-                             'class': '',
-                             'placeholder': 'Введите логин'
+                             'class': 'form-control',
+                             'placeholder': 'Введите логин',
                          }))
     password = CharField(label='Пароль',
                          required=True,
