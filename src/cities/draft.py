@@ -8,6 +8,8 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http.request import HttpRequest
 
 # загрушка:
+
+
 graph = None
 from_city = None
 to_city = None
@@ -28,4 +30,6 @@ def dfs_paths(graph, start, goal):
 all_ways = list(dfs_paths(
         graph=graph, start=from_city.pk, goal=to_city.pk
     ))
+
+
 
