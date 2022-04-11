@@ -40,6 +40,7 @@ urlpatterns = [
 # (33 урок для того как настроить runserver прямо из pycharm)
 # (11.77 обзор хостингов и серверов, ngrok или туннелирование)
 
+# find-route-service
 
 """
 T-34
