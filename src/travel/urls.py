@@ -33,7 +33,7 @@ urlpatterns = [
     path('delete/<int:pk>/', RouteDeleteView.as_view(), name='delete'),
 ]
 
-# 11.79
+# 11.86
 # (пересмотреть 53 урок, хорошо показан механизм деббагинга на pycharm)
 # (пересмотреть 55 урок, очень полезный)
 # (24 урок для настройки шаблонных тегов)
@@ -41,6 +41,8 @@ urlpatterns = [
 # (11.77 обзор хостингов и серверов, ngrok или туннелирование)
 
 # find-route-service
+
+# https://find-route-service.herokuapp.com/
 
 """
 T-34
