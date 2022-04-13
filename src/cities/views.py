@@ -56,7 +56,6 @@ class CityDetailView(DetailView):
     template_name = 'cities/detail.html'
 
     def get(self, request, *args, **kwargs):
-        cons(self.queryset)
         return super().get(request, *args, **kwargs)
 
 
@@ -84,7 +83,6 @@ class CityDeleteView(LoginRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         messages.success(request, 'Город успешно удалён')
-        cons(messages)
         # generic DeleteView будет удалять только, если
         # к нему обратиться post запросом
         # можно это сделать через форму, а можно здесь, через обработчик

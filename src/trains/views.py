@@ -42,7 +42,6 @@ class TrainDetailView(DetailView):
     template_name = 'trains/detail.html'
 
     def get(self, request, *args, **kwargs):
-        cons(self.queryset)
         return super().get(request, *args, **kwargs)
 
 

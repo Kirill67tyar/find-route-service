@@ -25,8 +25,8 @@ class Train(Model):
         related_name='trains_arrive',
         verbose_name='В какой город'
     )
-    departure_time = DateTimeField(verbose_name='Время отправления')
-    arrival_time = DateTimeField(verbose_name='Время прибытия')
+    # departure_time = DateTimeField(verbose_name='Время отправления')
+    # arrival_time = DateTimeField(verbose_name='Время прибытия')
 
     def __str__(self):
         return f'Поезд № {self.name}, {self.from_city} - {self.to_city}'
