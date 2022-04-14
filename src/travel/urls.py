@@ -33,7 +33,7 @@ urlpatterns = [
     path('delete/<int:pk>/', RouteDeleteView.as_view(), name='delete'),
 ]
 
-# 11.94
+# 11.98
 # (пересмотреть 53 урок, хорошо показан механизм деббагинга на pycharm)
 # (пересмотреть 55 урок, очень полезный)
 # (24 урок для настройки шаблонных тегов)
@@ -50,4 +50,43 @@ T-34
 
 T-35
 Кыив - Сочи (15)
+"""
+
+
+"""
+Данные для сервера ubuntu
+
+filename - gunicorn_config.py
+command = '/home/kirill/scrap/venv/bin/gunicorn'
+pythonpath = '/home/kirill/scrap/src'
+bind = '127.0.0.1:8005'
+workers = 3
+user = 'kirill'
+limit_request_fields = 32000
+limit_request_field_size = 0
+raw_env = 'DJANGO_SETTINGS_MODULE=scraping_service.settings'
+
+
+filename - start_gunicorn.sh
+#!/bin/bash
+source /home/kirill/scrap/venv/bin/activate
+exec gunicorn -c "/home/kirill/scrap/src/gunicorn_config.py" scraping_service.wsgi
+
+proxy_pass http://127.0.0.1:8005;
+proxy_set_header X-Forvarded-Host $server_name;
+proxy_set_header X-Real-IP $remote_addr;
+add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
+add_header Acces-Control-Allow-Origin *;
+
+
+
+[program:gunicorn]
+command=/home/kirill/scrap/bin/start_gunicorn.sh
+user=kirill
+process_name=%(program_name)s
+numproc=1
+autostart=1
+autorestart=1
+redirect_stderr=true
+
 """

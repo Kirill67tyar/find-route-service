@@ -7,8 +7,8 @@ from django.core.exceptions import ValidationError
 from cities.models import City
 from trains.models import Train
 from cities import views as cities_views
-from routes import forms as routes_forms, views as routes_views
 from routes.utils import get_graph2, dfs_paths
+from routes import forms as routes_forms, views as routes_views
 
 
 class AllTestsCase(TestCase):
@@ -114,12 +114,13 @@ class AllTestsCase(TestCase):
 
     #             тут я так понимаю, мы проверяем есть ли в e.messages вот эта запись - Поезд with this Время в пути...
     #             это делается как в self.assertEqual так и в self.assertIn
-    #             зачем это делается? может мы ожидаем что этот тест выдаст ожидаемую ошибку
+    #             зачем это делается? мы ожидаем что этот тест выдаст ожидаемую ошибку
     #             Причём assertEqual проверяет равна ли одна часть другой, и если нет то вызывает ошибку AssertionError
     #             assertEqual(<1 arg> == <2 arg>) --- True
-    #             self.assertIn(1, [2,3,]) --- AssertionError: 1 not found in [2, 3]
     #             А assertIn проверяет есть ли первый аргумент в итерабильном контейнере.
     #             assertIn(<1 arg> in <2 arg>) --- True
+    #             self.assertIn(1, [2,3,]) --- AssertionError: 1 not found in [2, 3]
+
     # тестирование на валидность routes.views
     def test_home_routes_views(self):
         """
@@ -264,7 +265,7 @@ assertRaises будет True если туда передастся ValidationEr
 Точнее в менеджере контекста будет вызываться ValidationError.
 Иначе вызовется AssertionError с такими пояснениями AssertionError: ValidationError not raised
 т.е. ошибка должна возникнуть, и тогда всё пройдёт нормально.
-к примеру, я создаю гордо с названием A, хотя в setUp такой город уже создавался
+к примеру, я создаю город с названием A, хотя в setUp такой город уже создавался
 при повторной попытке создать этот город в test_model_city_duplicate
 возникает ошибка и тест проходит.
 
@@ -276,15 +277,15 @@ assertRaises будет True если туда передастся ValidationEr
 И так:
 
 1 - класс, где ты пишешь тесты наследуется от TestCase
-2 - когда ты включаешь тест, то создаётся временная база данных исключительно для теста
+2 - когда ты включаешь тест, то создаётся временная база данных исключительно для теста 
+    (если она большая то это будет долго)
 3 - в def setUp(self)  мы определяем содержимое этой бд (наполняем её)
 4 - в функциях начинающихся на test_... мы делаем проверки, и при невалидных данных вызываем AssertionError
 5 - AssertionError мы вызываем посредством встроенных методов типа 
-self.assertionIn, self.assertionEqual или self.assertTemplateUsed и т.д.
+    self.assertionIn, self.assertionEqual или self.assertTemplateUsed и т.д.
 6 - Отдельным особняком стоит self.assertRaises который используется в контекстном менеджере
-если ниже self.assertRaises(ValidationError) не вызовется ValidationError то функция вызовет AssertionError
-в общем смотри выше в коде
-
+    если ниже self.assertRaises(ValidationError) не вызовется ValidationError то функция вызовет AssertionError
+    в общем смотри выше в коде
 7 - все эти функции вызываются python manage.py test
 
 
@@ -296,7 +297,7 @@ https://coverage.readthedocs.io/en/6.3.2/
 1 - pip install coverage
 2 - coverage run manage.py test    -проход тестов в обычном режиме (всё равно что python manage.py test)
 3 - coverage report                -ин-фа о том на сколько каждый файл приложения покрыт тестами
-4 - coverage html                  -записывает вкорень проекта папку htmlcov
+4 - coverage html                  -записывает в корень проекта папку htmlcov
 
 Вся мякотка после использования команды 'coverage html'
 В корне проекта появляется папка htmlcov (pycharm может не сразу увидеть)
